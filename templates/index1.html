@@ -1,0 +1,17 @@
+<form action="{{url_for('main')}}" method="POST">
+    <select name="book_name">
+        {% for title in book_titles %}
+        <option value="{{ title }}">{{ title }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Coba</button>
+</form>
+{% if result_dict %}
+<ul>
+    {% for key, value in result_dict.items() %}
+      {% if 'rec_' in key %}
+        <li>{{ key }}: {{ value }}</li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% endif %}

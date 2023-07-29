@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href={{ url_for('static', filename='/css/style.css') }} type="text/css">
+
+    <title>POSSIBLE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+  </head>
+  <body id="mypage">
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">&#160; ProgDataBooks</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto px-1">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Sistem Rekomendasi</a>
+              </li>
+              <li class="nav-item ms-4">
+                <a class="nav-link" href="#features">Data Buku</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- end of header -->
+    
+      <!-- JBT -->
+      <div class="jumbotron jumbotron-fluid" id="jumbotron">
+        <div class="container-fluid">
+          <div class="row align-items-center">
+            <div class="col-lg-6">
+              <h1 class="display-4">Knowledge is <span>power,</span><br> So get it <span>more</span></h1>
+              <p>Sistem Rekomendasi adalah sebuah aplikasi yang bertujuan memberikan saran rekomendasi mengenai item-item yang dapat membantu pengguna dalam mengambil keputusan. Website ini menyediakan sistem yang mengarahkan
+                pengguna pada rekomendasi buku Computer Science/Programming yang sesuai dengan preferensi pengguna. Diharapkan dapat membantu pengguna dalam memilih bacaan buku baru yang dapat meningkatkan skill pengguna.
+              </p>
+              <a class="btn btn-start" href="#features">Coba</a>
+            </div>
+            <div class="col-lg-6">
+              <img src="{{ url_for('static', filename='/images/imageJumbotron.png') }}" class="img-fluid custom-image" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+
+      <!-- end of JBT -->
+
+      <!-- Features -->
+      <div class="rekomendasi" id="rekomendasi">
+      <h1 class="text-center">Sistem Rekomendasi Buku</h1>
+      <div class="container-fluid d-flex justify-content-center align-items-center my-5">
+        <div class="row">
+          <div class="col-lg-12">
+            
+              <div class="container-fluid d-flex flex-row align-items-center">
+                <div class="flex-grow-1">
+                <img src="{{ url_for('static', filename='/images/imageRec.png') }}" class="img-fluide" alt="" style="height: 600px; width: 600px;">
+                </div>
+                <div class="recForm">
+                  <form action="" method="POST" enctype="multipart/form-data">
+                    <div class="mb-4">
+                    <select name="book_name" class="form-control">
+                      {% for title in book_titles %}
+                      <option value="{{ title }}">{{ title }}</option>
+                      {% endfor %}
+                  </select>
+                </div>
+                    <div class="mb-4">
+                        <input type="text" class="form-control" id="notelp" name="kontak" placeholder="No. Telp Pelapor" required>
+                    </div>
+    
+                    <button type="submit" class="btn btn-start">REGISTER</button>
+                  </form>
+              </div>
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+      
+
+      <!-- end of features -->
+
+      <!-- about us -->
+      <div class="about-us" id="about-us">
+          <h1>ABOUT US</h1>
+          <div class="row">
+            <div class="col">
+            <img src={{ url_for('static', filename='/images/4905879.jpg') }} alt="">
+          </div>
+          <div class="col">
+            <p>Banyaknya laporan orang hilang yang tidak ditemukan, terutama <br>
+          pada kalangan lansia, anak kecil, dan penderita odgj. Membuat <br>
+          POSSIBLE dikembangkan.
+          <br><br>
+          POSSIBLE - Platform of Missing People adalah sebuah platform <br>
+          website yang memungkinkan masyarakat/polisi/siapapun dapat <br>
+          mencari keluarga/kerabatnya yang hilang. Website POSSIBLE <br>
+          memanfaatkan teknologi <span>Artificial Intelligent</span> untuk membantu <br>
+          system mengenali kemiripan wajah pada gambar.
+          </p>
+        </div>
+        </div>
+       
+      </div>
+      <!-- end of about us -->
+
+      <!-- developer -->
+      <div class="developers" id="developers">
+        <h1>DEVELOPERS</h1>
+        <div class="row">
+          <div class="col">
+            <img src={{ url_for('static', filename='/images/muadz.jpg') }} alt="">
+            <p>Abdullah Mu'adz Muflih<br>
+            Universitas Negeri Jakarta</p>
+          </div>
+          <div class="col">
+            <img src={{ url_for('static', filename='/images/vivi.jpg') }} alt="">
+            <p>Vivi Fitriyani<br>
+              Universitas Negeri Jakarta</p>
+          </div>
+          <div class="col">
+            <img src={{ url_for('static', filename='/images/fathur.jpg') }} alt="">
+            <p>Fathurahman<br>
+              Universitas Gunadarma</p>
+          </div>
+          <div class="col">
+            <img src={{ url_for('static', filename='/images/nydia1.jpeg') }} alt="">
+            <p>Nydia Erlinda<br>
+              Universitas Bakrie</p>
+          </div>
+          <div class="col">
+            <img src={{ url_for('static', filename='/images/redja.jpg') }} alt="">
+            <p>Redja Djata Saputra<br>
+              Universitas Esa Unggul</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+    <footer class="container-fluid text-center">
+      <p>©Possible</p>
+    </footer>
+
+
+    <script src="/static/js/client-side.js"></script>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
