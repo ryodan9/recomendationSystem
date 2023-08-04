@@ -4,7 +4,8 @@ import pandas as pd
 import re
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from function import clean_text
+from function import clean_text, generate_google_search_link
+from urllib.parse import quote
 
 import nltk
 nltk.download('stopwords')
@@ -13,9 +14,9 @@ from string import punctuation
 
 app = Flask(__name__)
 
-df = pd.read_csv('./model/prog_book.csv')
+df = pd.read_csv('./model/clear_data.csv')
 
-df['clean_Book_title']=df['Book_title'].apply(clean_text)
+df['clean_Book_title']=df['Title'].apply(clean_text)
 df['clean_Description']=df['Description'].apply(clean_text)
 
 # Initializing vectorizer
@@ -62,38 +63,50 @@ def get_recommendations(value_of_element, feature_locate, df, vectors_array, fea
     idx = (-most_similar_sklearn).argsort()
 
     # Finding features of similar objects by index
-    all_values = df_without[[feature_show]]
-    for index in idx:
-      simular = all_values.values[idx]
+    similar_df = df_without.iloc[idx]
 
-    recommendations_df = pd.DataFrame({feature_show: show_value_of_element,
-                                    "rec_1": simular[0][0],
-                                    "rec_2": simular[1][0],
-                                    "rec_3": simular[2][0],
-                                    "rec_4": simular[3][0],
-                                    "rec_5": simular[4][0],
-                                    "rec_6": simular[5][0],
-                                    "rec_7": simular[6][0],
-                                    "rec_8": simular[7][0],
-                                    "rec_9": simular[8][0],
-                                    "rec_10": simular[9][0]}, index=[0])
-
+   #  recommendations_df = pd.DataFrame({feature_show: show_value_of_element,
+   #                                  "rec_1": simular[0][0],
+   #                                  "rec_2": simular[1][0],
+   #                                  "rec_3": simular[2][0],
+   #                                  "rec_4": simular[3][0],
+   #                                  "rec_5": simular[4][0]}, index=[0])
+    
+    recommendations_df = pd.DataFrame({
+        "Title": similar_df['Title'].values[:5],
+        "Author": similar_df['Authors'].values[:5],
+        "Description": similar_df['Description'].values[:5],  # Get top 5 similar descriptions
+        "ImageLink": similar_df['ImageLink'].values[:5]  # Get top 5 similar imagelinks
+    })
 
     return recommendations_df
 
+@app.template_filter('search_link')
+def generate_google_search_link(title):
+        # Membuat URL dasar Google Search
+        google_search_base_url = "https://www.google.com/search?q="
+        search_query = f"{title}"
+        encoded_query = quote(search_query)
+        return f"{google_search_base_url}{encoded_query}"
+
 @app.route('/', methods=['GET', 'POST'])
 def main():
-   book_titles = df['Book_title'].tolist()
+   book_titles = df['Title'].tolist()
 
    if request.method == 'GET':
-      return render_template('index.html', book_titles=book_titles)
+      result = None
+      return render_template('index.html', book_titles=book_titles, result=result)
    
    if request.method == 'POST':
       book = request.form['book_name']
 
-      result = get_recommendations(book, 'Book_title', df, title_vectors, 'Book_title')
-      result_dict = result.to_dict(orient='records')[0]
-      return render_template('index.html', result_dict=result_dict, book_titles=book_titles)
+      result = get_recommendations(book, 'Title', df, title_vectors, 'Title')
+      # result_dict = result.to_dict(orient='records')[0]
+      return render_template('index.html', result=result, book_titles=book_titles, book=book)
+   
+@app.route('/book_data')
+def book_data():
+    return render_template('book_data.html', df=df)
 
 if __name__ == '__main__':
     app.run(debug=True)

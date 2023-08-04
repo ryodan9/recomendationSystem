@@ -28,3 +28,8 @@ def clean_text(text):
     text = remove_stopwords(text)
     text = remove_digits(text)
     return text
+
+def generate_google_search_link(title):
+        search_query = f"{title}"
+        encoded_query = quote(search_query)
+        return f"{google_search_base_url}{encoded_query}"

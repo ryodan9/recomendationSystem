@@ -29,7 +29,7 @@
                 <a class="nav-link active" aria-current="page" href="#">Sistem Rekomendasi</a>
               </li>
               <li class="nav-item ms-4">
-                <a class="nav-link" href="#features">Data Buku</a>
+                <a class="nav-link" href="{{ url_for('book_data') }}">Data Buku</a>
               </li>
             </ul>
           </div>
@@ -46,7 +46,7 @@
               <p>Sistem Rekomendasi adalah sebuah aplikasi yang bertujuan memberikan saran rekomendasi mengenai item-item yang dapat membantu pengguna dalam mengambil keputusan. Website ini menyediakan sistem yang mengarahkan
                 pengguna pada rekomendasi buku Computer Science/Programming yang sesuai dengan preferensi pengguna. Diharapkan dapat membantu pengguna dalam memilih bacaan buku baru yang dapat meningkatkan skill pengguna.
               </p>
-              <a class="btn btn-start" href="#features">Coba</a>
+              <a class="btn btn-start" href="#rekomendasi">Coba</a>
             </div>
             <div class="col-lg-6">
               <img src="{{ url_for('static', filename='/images/imageJumbotron.png') }}" class="img-fluid custom-image" alt="">
@@ -62,7 +62,7 @@
       <!-- Features -->
       <div class="rekomendasi" id="rekomendasi">
       <h1 class="text-center">Sistem Rekomendasi Buku</h1>
-      <div class="container-fluid d-flex justify-content-center align-items-center my-5">
+      <div class="container d-flex justify-content-center align-items-center my-5">
         <div class="row">
           <div class="col-lg-12">
             
@@ -71,19 +71,24 @@
                 <img src="{{ url_for('static', filename='/images/imageRec.png') }}" class="img-fluide" alt="" style="height: 600px; width: 600px;">
                 </div>
                 <div class="recForm">
-                  <form action="" method="POST" enctype="multipart/form-data">
+                  <form action="{{url_for('main')}}" method="POST" enctype="multipart/form-data">
                     <div class="mb-4">
+                    <label for="book_name">Judul Buku Favorite :</label>
+                    <div class="alert alert-primary" role="alert">
+                      Buku berjumlah <a href="#" class="alert-link">270 Buku.</a> Yang terdiri dari buku Programming dan Computer Science.
+                    </div>
                     <select name="book_name" class="form-control">
+                      <option selected disabled>Choose...</option>
                       {% for title in book_titles %}
                       <option value="{{ title }}">{{ title }}</option>
                       {% endfor %}
                   </select>
                 </div>
                     <div class="mb-4">
-                        <input type="text" class="form-control" id="notelp" name="kontak" placeholder="No. Telp Pelapor" required>
+                        <p>Sistem ini akan memberikan rekomendasi buku sebanyak 5 buku.</p>
                     </div>
     
-                    <button type="submit" class="btn btn-start">REGISTER</button>
+                    <button type="submit" class="btn btn-start btn-rec">Cari Rekomendasi Buku</button>
                   </form>
               </div>
               </div>
@@ -96,66 +101,58 @@
 
       <!-- end of features -->
 
-      <!-- about us -->
-      <div class="about-us" id="about-us">
-          <h1>ABOUT US</h1>
-          <div class="row">
-            <div class="col">
-            <img src={{ url_for('static', filename='/images/4905879.jpg') }} alt="">
+      <!-- Hasil Rekomendasi -->
+      
+      {% if result is not none %}
+      <div class="hasil-rekomendasi" id="hasil-rekomendasi">
+        <div class="container-fluid">
+          <h1 class="text-center">Hasil Rekomendasi</h1>
+          {% if book %}
+          <div class="alert alert-primary d-flex justify-content-center" role="alert">
+            Judul Buku Favorite : "{{book}}"
           </div>
-          <div class="col">
-            <p>Banyaknya laporan orang hilang yang tidak ditemukan, terutama <br>
-          pada kalangan lansia, anak kecil, dan penderita odgj. Membuat <br>
-          POSSIBLE dikembangkan.
-          <br><br>
-          POSSIBLE - Platform of Missing People adalah sebuah platform <br>
-          website yang memungkinkan masyarakat/polisi/siapapun dapat <br>
-          mencari keluarga/kerabatnya yang hilang. Website POSSIBLE <br>
-          memanfaatkan teknologi <span>Artificial Intelligent</span> untuk membantu <br>
-          system mengenali kemiripan wajah pada gambar.
-          </p>
+          {% endif %}
+          <table class="table container-fluid table-striped">
+            <thead>
+              <tr>
+                <th scope="col">~</th>
+                <th scope="col">Judul</th>
+                <th scope="col">Author</th>
+                <th scope="col">Link</th>
+                <th scope="col">Cover</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for index, row in result.iterrows() %}
+              <tr>
+                <td>{{loop.index}}</td>
+                <th scope="row">{{ row['Title'] }}</th>
+                <td>
+                  {{ row['Author'] }}
+                </td>
+                <td>
+                  <a href="{{ row['Title']|search_link }}" target="_blank">Google Search</a>
+                </td>
+                <td>
+                  <img src="{{ row['ImageLink']}}" alt="{{ row['ImageLink']}}">
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
-        </div>
-       
       </div>
-      <!-- end of about us -->
+      {% endif %}
+      <!-- endOf Hasil Rekomendasi -->
 
-      <!-- developer -->
-      <div class="developers" id="developers">
-        <h1>DEVELOPERS</h1>
-        <div class="row">
-          <div class="col">
-            <img src={{ url_for('static', filename='/images/muadz.jpg') }} alt="">
-            <p>Abdullah Mu'adz Muflih<br>
-            Universitas Negeri Jakarta</p>
-          </div>
-          <div class="col">
-            <img src={{ url_for('static', filename='/images/vivi.jpg') }} alt="">
-            <p>Vivi Fitriyani<br>
-              Universitas Negeri Jakarta</p>
-          </div>
-          <div class="col">
-            <img src={{ url_for('static', filename='/images/fathur.jpg') }} alt="">
-            <p>Fathurahman<br>
-              Universitas Gunadarma</p>
-          </div>
-          <div class="col">
-            <img src={{ url_for('static', filename='/images/nydia1.jpeg') }} alt="">
-            <p>Nydia Erlinda<br>
-              Universitas Bakrie</p>
-          </div>
-          <div class="col">
-            <img src={{ url_for('static', filename='/images/redja.jpg') }} alt="">
-            <p>Redja Djata Saputra<br>
-              Universitas Esa Unggul</p>
-          </div>
-        </div>
-      </div>
+      
+
+      
 
       <!-- Footer -->
-    <footer class="container-fluid text-center">
+    <!-- <footer class="container-fluid text-center">
       <p>©Possible</p>
-    </footer>
+    </footer> -->
 
 
     <script src="/static/js/client-side.js"></script>
