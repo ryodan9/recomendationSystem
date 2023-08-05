@@ -47,20 +47,9 @@ window.addEventListener('scroll', function(event) { // To listen for event
     }
 });
 
+// document.getElementById('recForm').onsubmit = function (event) {
+//   event.preventDefault(); // Mencegah form melakukan submit biasa
 
-// Button Read More
-function readMore(loop) {
-    var dots = document.querySelector(`.info[data-loop="${loop}"] .dots`);
-    var moreText = document.querySelector(`.info[data-loop="${loop}"] .more`);
-    var btnText = document.querySelector(`.info[data-loop="${loop}"] .myBtn`);
-
-    if (dots.style.display === "none") {
-      dots.style.display = "inline";
-      btnText.innerHTML = "Read more";
-      moreText.style.display = "none";
-    } else {
-      dots.style.display = "none";
-      btnText.innerHTML = "Read less";
-      moreText.style.display = "inline";
-    }
-  }
+//   // Mengarahkan ke div dengan ID 'targetDiv'
+//   document.getElementById('hasil-rekomendasi').scrollIntoView({ behavior: 'smooth' });
+// };

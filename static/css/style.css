@@ -209,8 +209,9 @@ tr:nth-child(odd) {
 /* Footer */
 
 footer {
-    background-color:#ff9523;
+    background-color:#069fbf;
     height: 50px;
+    color: white;
 }
 
 footer p {
