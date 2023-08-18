@@ -100,7 +100,7 @@ def main():
    if request.method == 'POST':
       book = request.form['book_name']
 
-      result = get_recommendations(book, 'Title', df, title_vectors, 'Title')
+      result = get_recommendations(book, 'Title', df, desc_vectors, 'Title')
       # result_dict = result.to_dict(orient='records')[0]
       return render_template('index.html', result=result, book_titles=book_titles, book=book)
    
